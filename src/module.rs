@@ -2,7 +2,7 @@ use sensor::{Sensor, SensorType};
 
 /// Module Arten
 ///
-/// Zur Zeit wird nur eine Art unterstützt
+/// Zur Zeit wird nur eine Art Modul unterstützt
 ///
 /// * RAGAS_CO_NO       - RA-GAS GmbH Kombisensor mit CO und NO Messzelle
 pub enum ModuleType {
@@ -12,7 +12,7 @@ pub enum ModuleType {
 
 /// Sensorplatine mit einem Vector der angeschlossenen Sensoren
 pub struct Module<'a> {
-    pub module_type: ModuleType,
+    module_type: ModuleType,
     pub sensors: Vec<Sensor<'a>>,
 }
 

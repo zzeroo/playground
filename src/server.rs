@@ -32,5 +32,7 @@ mod server_test {
         let server = Server::new();
         assert_eq!(server.zones[0].zone_type, ZoneType::STOERUNG);
         assert_eq!(server.zones[1].zone_type, ZoneType::SCHWELLENWERT);
+        // TODO: teste das
+        // assert_eq!(server.zones[6].zone_type, true);
     }
 }

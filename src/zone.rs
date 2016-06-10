@@ -67,4 +67,20 @@ impl Zone {
     pub fn alarmpunkte(&self) -> Vec<bool> {
         self.alarmpunkte.borrow().clone()
     }
+
+    /// Liefert ein modifizierbares Array der alarmpunkte der Zone
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use playground::zone::{Zone, ZoneType};
+    ///
+    /// let stoerung = Zone::new(ZoneType::STOERUNG);
+    ///
+    /// //stoerung.alarmpunkte_mut()[0] = true;
+    /// //assert_eq!(stoerung.alarmpunkte()[0], 1);
+    /// ```
+    pub fn alarmpunkte_mut(&self) {
+        unimplemented!()
+    }
 }
