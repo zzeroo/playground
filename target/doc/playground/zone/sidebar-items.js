@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ZoneType","Zonentypen"]],"struct":[["Zone","Datenstruktur die die Zonen representiert"]]});

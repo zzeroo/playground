@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ShiftRegisterType","Representiert die verschiedenen Shift Register Typen"]],"struct":[["ShiftRegister","Datenstruktur der Shift Register Hardware"]]});

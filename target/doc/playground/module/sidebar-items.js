@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ModuleType","Module Arten"]],"struct":[["Module","Sensorplatine mit einem Vector der angeschlossenen Sensoren"]]});

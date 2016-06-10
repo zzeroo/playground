@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["SensorType","Sensortyp, Art der Messzelle"]],"struct":[["Sensor","Representiert eine Sensor Messzelle"]]});
