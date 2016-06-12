@@ -52,19 +52,4 @@ mod sensor_tests {
         sensor.zones.push(&server.zones[0]);
     }
 
-    #[test]
-    #[ignore]
-    fn sensor_kann_server_zonen_aendern() {
-        let mut server = Server::new();
-        let mut sensor = Sensor::new(SensorType::NemotoCO);
-        // Stoerungszone dem Sensor zuweisen
-        sensor.zones.push(&server.zones[0]);
-        // Zone 1 dem Sensor zuweisen
-        sensor.zones.push(&server.zones[1]);
-        assert_eq!(server.zones[1].alarmpunkte().get(0).unwrap(), &false);
-
-        //sensor.zones.get(1).unwrap().alarmpunkte_mut()[0] = true;
-
-        //assert_eq!(server.zones[1].alarmpunkte().get(0).unwrap(), &true);
-    }
 }

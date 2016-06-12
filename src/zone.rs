@@ -1,8 +1,3 @@
-use std::cell::RefCell;
-use std::rc::Rc;
-
-
-
 /// Zonentypen
 ///
 /// Die Anzahl der Alarmpunkte unterscheidet sich je nach Zonentype
@@ -19,7 +14,7 @@ pub enum ZoneType {
 #[derive(Debug, Eq, PartialEq)]
 pub struct Zone {
     pub zone_type: ZoneType,
-    alarmpunkte: Rc<RefCell<Vec<bool>>>,
+    pub alarmpunkte: Vec<bool>,
 }
 
 impl Zone {
@@ -36,51 +31,20 @@ impl Zone {
     /// let stoerung = Zone::new(ZoneType::STOERUNG);
     /// let zone1 = Zone::new(ZoneType::SCHWELLENWERT);
     ///
-    /// assert_eq!(stoerung.alarmpunkte().len(), 1);
-    /// assert_eq!(zone1.alarmpunkte().len(), 4);
+    /// assert_eq!(stoerung.alarmpunkte.len(), 1);
+    /// assert_eq!(zone1.alarmpunkte.len(), 4);
     /// ```
     pub fn new(zone_type: ZoneType) -> Self {
         match zone_type {
             ZoneType::STOERUNG => Zone {
                 zone_type: ZoneType::STOERUNG,
-                alarmpunkte: Rc::new(RefCell::new(vec![false])),
+                alarmpunkte: vec![false],
             },
             ZoneType::SCHWELLENWERT => Zone {
                 zone_type: ZoneType::SCHWELLENWERT,
-                alarmpunkte: Rc::new(RefCell::new(vec![false; 4])),
+                alarmpunkte: vec![false; 4],
             }
         }
     }
 
-    /// Liefert ein Array mit den Boolean Werten der alarmpunkte
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use playground::zone::{Zone, ZoneType};
-    ///
-    /// let stoerung = Zone::new(ZoneType::STOERUNG);
-    /// let zone1 = Zone::new(ZoneType::SCHWELLENWERT);
-    ///
-    /// assert_eq!(stoerung.alarmpunkte().len(), 1);
-    /// ```
-    pub fn alarmpunkte(&self) -> Vec<bool> {
-        self.alarmpunkte.borrow().clone()
-    }
-
-    /// Liefert ein modifizierbares Array der alarmpunkte der Zone
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use playground::zone::{Zone, ZoneType};
-    ///
-    /// let stoerung = Zone::new(ZoneType::STOERUNG);
-    ///
-    /// //stoerung.alarmpunkte_mut()[0] = true;
-    /// //assert_eq!(stoerung.alarmpunkte()[0], 1);
-    /// ```
-    pub fn alarmpunkte_mut(&self) {
-        unimplemented!()
-    }
 }
