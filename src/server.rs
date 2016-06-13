@@ -34,8 +34,8 @@ mod server_test {
         assert_eq!(server.zones[1].zone_type, ZoneType::SCHWELLENWERT);
         // TODO: teste das
         // assert_eq!(server.zones[6].zone_type, true);
-        assert_eq!(server.zones[0].alarmpunkte.len(), 1);
-        assert_eq!(server.zones[1].alarmpunkte.len(), 4);
+        assert_eq!(server.zones[0].alarmpunkte.read().unwrap().len(), 1);
+        assert_eq!(server.zones[1].alarmpunkte.read().unwrap().len(), 4);
     }
 
     #[test]
@@ -47,8 +47,8 @@ mod server_test {
     #[test]
     fn server_kann_alarmpunkte_setzen() {
         let mut server = Server::new();
-        assert_eq!(server.zones[0].alarmpunkte[0], false);
-        server.zones[0].alarmpunkte[0] = true;
-        assert_eq!(server.zones[0].alarmpunkte[0], true);
+        assert_eq!(server.zones[0].alarmpunkte.read().unwrap()[0], false);
+        server.zones[0].alarmpunkte.write().unwrap()[0] = true;
+        assert_eq!(server.zones[0].alarmpunkte.read().unwrap()[0], true);
     }
 }

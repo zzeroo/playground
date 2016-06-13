@@ -13,7 +13,6 @@ pub enum ModuleType {
 
 
 /// Sensorplatine mit einem Vector der angeschlossenen Sensoren
-#[derive(Debug, Eq, PartialEq)]
 pub struct Module<'a> {
     module_type: ModuleType,
     pub sensors: Vec<Sensor<'a>>,

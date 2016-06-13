@@ -1,3 +1,5 @@
+use std::sync::{Arc, RwLock};
+
 /// Zonentypen
 ///
 /// Die Anzahl der Alarmpunkte unterscheidet sich je nach Zonentype
@@ -17,10 +19,9 @@ pub enum Direction {
 }
 
 /// Datenstruktur die die Zonen representiert
-#[derive(Debug, Eq, PartialEq)]
 pub struct Zone {
     pub zone_type: ZoneType,
-    pub alarmpunkte: Vec<bool>,
+    pub alarmpunkte: Arc<RwLock<Vec<bool>>>,
     direction: Direction,
 }
 
@@ -38,21 +39,37 @@ impl Zone {
     /// let stoerung = Zone::new(ZoneType::STOERUNG);
     /// let zone1 = Zone::new(ZoneType::SCHWELLENWERT);
     ///
-    /// assert_eq!(stoerung.alarmpunkte.len(), 1);
-    /// assert_eq!(zone1.alarmpunkte.len(), 4);
+    /// assert_eq!(stoerung.alarmpunkte.read().unwrap().len(), 1);
+    /// assert_eq!(zone1.alarmpunkte.read().unwrap().len(), 4);
     /// ```
     pub fn new(zone_type: ZoneType) -> Self {
         match zone_type {
             ZoneType::STOERUNG => Zone {
                 zone_type: ZoneType::STOERUNG,
-                alarmpunkte: vec![false],
+                alarmpunkte: Arc::new(RwLock::new(vec![false])),
                 direction: Direction::NC,
             },
             ZoneType::SCHWELLENWERT => Zone {
                 zone_type: ZoneType::SCHWELLENWERT,
-                alarmpunkte: vec![false; 4],
+                alarmpunkte: Arc::new(RwLock::new(vec![false; 4])),
                 direction: Direction::NO,
             }
+        }
+    }
+
+    // TODO: Dokumentation!
+    pub fn alarmpunkt(&self, id: usize) -> Option<bool> {
+        match self.alarmpunkte.read().unwrap().len() > id {
+            true => Some(self.alarmpunkte.read().unwrap()[id]),
+            _ => None,
+        }
+    }
+
+    // TODO: Dokumentation
+    pub fn alarmpunkt_set(&mut self, id: usize, value: bool) {
+        match self.alarmpunkt(id) {
+            Some(_) => { self.alarmpunkte.write().unwrap()[id] = value; },
+            None => {},
         }
     }
 }
@@ -64,13 +81,13 @@ mod tests {
     #[test]
     fn zone_stoerung() {
         let zone = Zone::new(ZoneType::STOERUNG);
-        assert_eq!(zone.alarmpunkte.len(), 1);
+        assert_eq!(zone.alarmpunkte.read().unwrap().len(), 1);
     }
 
     #[test]
     fn zone_schwellenwert() {
         let zone = Zone::new(ZoneType::SCHWELLENWERT);
-        assert_eq!(zone.alarmpunkte.len(), 4);
+        assert_eq!(zone.alarmpunkte.read().unwrap().len(), 4);
     }
 
     #[test]
