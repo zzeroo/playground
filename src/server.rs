@@ -1,4 +1,4 @@
-use module::{Module, ModuleType};
+use module::{Module};
 use zone::{Zone, ZoneType};
 
 /// Server Datenstruktur
@@ -14,41 +14,53 @@ impl<'a> Server<'a> {
                 Zone::new(ZoneType::STOERUNG),
                 Zone::new(ZoneType::SCHWELLENWERT),
             ],
-            module: vec![
-                Module::new(ModuleType::RAGAS_CO_NO),
-            ],
+            module: vec![],
         }
     }
 }
 
 
 #[cfg(test)]
-mod server_test {
+mod tests {
     use super::*;
     use zone::{ZoneType};
+    use module::{Module, ModuleType};
+
+    #[test]
+    fn defaults() {
+        let server = Server::new();
+        assert_eq!(server.module.len(), 0);
+    }
 
     #[test]
     fn zone_defaults() {
         let server = Server::new();
         assert_eq!(server.zones[0].zone_type, ZoneType::STOERUNG);
         assert_eq!(server.zones[1].zone_type, ZoneType::SCHWELLENWERT);
-        // TODO: teste das
-        // assert_eq!(server.zones[6].zone_type, true);
-        assert_eq!(server.zones[0].alarmpunkte.read().unwrap().len(), 1);
-        assert_eq!(server.zones[1].alarmpunkte.read().unwrap().len(), 4);
+        assert_eq!(server.zones[0].alarmpunkt(0), Some(false));
+        assert_eq!(server.zones[0].alarmpunkt(1), None);
+        assert_eq!(server.zones[0].alarmpunkt(2), None);
+        assert_eq!(server.zones[0].alarmpunkt(3), None);
+        assert_eq!(server.zones[1].alarmpunkt(0), Some(false));
+        assert_eq!(server.zones[1].alarmpunkt(1), Some(false));
+        assert_eq!(server.zones[1].alarmpunkt(2), Some(false));
+        assert_eq!(server.zones[1].alarmpunkt(3), Some(false));
     }
 
     #[test]
     fn zonen_und_module() {
-        let server = Server::new();
+        let mut server = Server::new();
+        let module1 = Module::new(ModuleType::RAGAS_CO_NO);
+        assert_eq!(server.module.len(), 0);
+        server.module.push(module1);
         assert_eq!(server.module.len(), 1);
     }
 
     #[test]
     fn server_kann_alarmpunkte_setzen() {
-        let mut server = Server::new();
-        assert_eq!(server.zones[0].alarmpunkte.read().unwrap()[0], false);
-        server.zones[0].alarmpunkte.write().unwrap()[0] = true;
-        assert_eq!(server.zones[0].alarmpunkte.read().unwrap()[0], true);
+        let server = Server::new();
+        assert_eq!(server.zones[0].alarmpunkt(0).unwrap(), false);
+        server.zones[0].alarmpunkt_set(0, true);
+        assert_eq!(server.zones[0].alarmpunkt(0).unwrap(), true);
     }
 }

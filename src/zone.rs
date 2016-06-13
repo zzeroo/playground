@@ -21,7 +21,7 @@ pub enum Direction {
 /// Datenstruktur die die Zonen representiert
 pub struct Zone {
     pub zone_type: ZoneType,
-    pub alarmpunkte: Arc<RwLock<Vec<bool>>>,
+    alarmpunkte: Arc<RwLock<Vec<bool>>>,
     direction: Direction,
 }
 
@@ -39,8 +39,8 @@ impl Zone {
     /// let stoerung = Zone::new(ZoneType::STOERUNG);
     /// let zone1 = Zone::new(ZoneType::SCHWELLENWERT);
     ///
-    /// assert_eq!(stoerung.alarmpunkte.read().unwrap().len(), 1);
-    /// assert_eq!(zone1.alarmpunkte.read().unwrap().len(), 4);
+    /// assert_eq!(stoerung.alarmpunkt(0), Some(false));
+    /// assert_eq!(zone1.alarmpunkt(0), Some(false));
     /// ```
     pub fn new(zone_type: ZoneType) -> Self {
         match zone_type {
@@ -57,7 +57,21 @@ impl Zone {
         }
     }
 
-    // TODO: Dokumentation!
+    /// Fragt ein Alarmpunkt ab
+    ///
+    /// # Arguments
+    /// * `id`       - ID des Alarmpunkts
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use playground::zone::{Zone, ZoneType};
+    ///
+    /// let stoerung = Zone::new(ZoneType::STOERUNG);
+    ///
+    /// assert_eq!(stoerung.alarmpunkt(0), Some(false));
+    /// assert_eq!(stoerung.alarmpunkt(99), None);
+    /// ```
     pub fn alarmpunkt(&self, id: usize) -> Option<bool> {
         match self.alarmpunkte.read().unwrap().len() > id {
             true => Some(self.alarmpunkte.read().unwrap()[id]),
@@ -65,8 +79,23 @@ impl Zone {
         }
     }
 
-    // TODO: Dokumentation
-    pub fn alarmpunkt_set(&mut self, id: usize, value: bool) {
+    /// Fragt ein Alarmpunkt ab
+    ///
+    /// # Arguments
+    /// * `id`       - ID des Alarmpunkts
+    /// * `value`    - zu setzender Wert des Alarmpunkts (entweder `true` oder `false`)
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use playground::zone::{Zone, ZoneType};
+    ///
+    /// let stoerung = Zone::new(ZoneType::STOERUNG);
+    ///
+    /// stoerung.alarmpunkt_set(0, true);
+    /// assert_eq!(stoerung.alarmpunkt(0), Some(true));
+    /// ```
+    pub fn alarmpunkt_set(&self, id: usize, value: bool) {
         match self.alarmpunkt(id) {
             Some(_) => { self.alarmpunkte.write().unwrap()[id] = value; },
             None => {},
@@ -81,13 +110,19 @@ mod tests {
     #[test]
     fn zone_stoerung() {
         let zone = Zone::new(ZoneType::STOERUNG);
-        assert_eq!(zone.alarmpunkte.read().unwrap().len(), 1);
+        assert_eq!(zone.alarmpunkt(0), Some(false));
+        assert_eq!(zone.alarmpunkt(1), None);
+        assert_eq!(zone.alarmpunkt(2), None);
+        assert_eq!(zone.alarmpunkt(3), None);
     }
 
     #[test]
     fn zone_schwellenwert() {
         let zone = Zone::new(ZoneType::SCHWELLENWERT);
-        assert_eq!(zone.alarmpunkte.read().unwrap().len(), 4);
+        assert_eq!(zone.alarmpunkt(0), Some(false));
+        assert_eq!(zone.alarmpunkt(1), Some(false));
+        assert_eq!(zone.alarmpunkt(2), Some(false));
+        assert_eq!(zone.alarmpunkt(3), Some(false));
     }
 
     #[test]

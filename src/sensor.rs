@@ -35,10 +35,15 @@ impl<'a> Sensor<'a> {
 }
 
 #[cfg(test)]
-mod sensor_tests {
+mod tests {
     use super::*;
     use server::Server;
-    use zone::Zone;
+
+    #[test]
+    fn defaults() {
+        let sensor = Sensor::new(SensorType::NemotoCO);
+        assert_eq!(sensor.adc_value, 0);
+    }
 
     #[test]
     fn sensor_nemoto_co() {
@@ -62,7 +67,7 @@ mod sensor_tests {
 
     #[test]
     fn sensor_mit_mehr_als_einer_zone() {
-        let mut server = Server::new();
+        let server = Server::new();
         let mut sensor = Sensor::new(SensorType::NemotoCO);
         sensor.zones.push(&server.zones[0]);
         sensor.zones.push(&server.zones[1]);
@@ -74,25 +79,25 @@ mod sensor_tests {
         let mut server = Server::new();
         let mut sensor = Sensor::new(SensorType::NemotoCO);
         sensor.zones.push(&mut server.zones[0]);
-        assert_eq!(sensor.zones[0].alarmpunkte.read().unwrap()[0], false);
+        assert_eq!(sensor.zones[0].alarmpunkt(0).unwrap(), false);
         // Setze den ersten Alarmpunkt der ersten Zone
-        sensor.zones[0].alarmpunkte.write().unwrap()[0] = true;
-        assert_eq!(sensor.zones[0].alarmpunkte.read().unwrap()[0], true);
+        sensor.zones[0].alarmpunkt_set(0, true);
+        assert_eq!(sensor.zones[0].alarmpunkt(0).unwrap(), true);
     }
     #[test]
     fn sensor_mit_mehr_als_einer_zone_kann_alarmpunkt_setzen() {
-        let mut server = Server::new();
+        let server = Server::new();
         let mut sensor = Sensor::new(SensorType::NemotoCO);
         sensor.zones.push(&server.zones[0]);
         sensor.zones.push(&server.zones[1]);
-        assert_eq!(sensor.zones[0].alarmpunkte.read().unwrap()[0], false);
-        assert_eq!(sensor.zones[1].alarmpunkte.read().unwrap()[0], false);
+        assert_eq!(sensor.zones[0].alarmpunkt(0).unwrap(), false);
+        assert_eq!(sensor.zones[1].alarmpunkt(0).unwrap(), false);
         // Setze den ersten Alarmpunkt der ersten Zone
-        sensor.zones[0].alarmpunkte.write().unwrap()[0] = true;
+        sensor.zones[0].alarmpunkt_set(0, true);
         // Setze den ersten Alarmpunkt der zweiten Zone
-        sensor.zones[1].alarmpunkte.write().unwrap()[0] = true;
-        assert_eq!(sensor.zones[0].alarmpunkte.read().unwrap()[0], true);
-        assert_eq!(sensor.zones[1].alarmpunkte.read().unwrap()[0], true);
+        sensor.zones[1].alarmpunkt_set(0, true);
+        assert_eq!(sensor.zones[0].alarmpunkt(0).unwrap(), true);
+        assert_eq!(sensor.zones[1].alarmpunkt(0).unwrap(), true);
     }
 
 }

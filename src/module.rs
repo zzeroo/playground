@@ -52,7 +52,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn module_defaults() {
+    fn defaults() {
         let module = Module::new(ModuleType::RAGAS_CO_NO);
         assert_eq!(module.module_type, ModuleType::RAGAS_CO_NO);
     }

@@ -173,7 +173,7 @@ mod tests {
     }
 
     #[test]
-    fn set_clear_all_bits() {
+    fn set_and_clear_all_bits() {
         let mut led = ShiftRegister::new(ShiftRegisterType::LED);
 
         for i in 1..64 {
