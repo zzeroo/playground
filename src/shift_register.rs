@@ -6,6 +6,7 @@
 ///             - Nur die ersten 24 Ausgänge sind verbunden
 /// * RELAIS    - Die Relais Shift Register sind zwei 8bit, serial in, paralel out, Shift Register, daisy chained
 ///             - Nur die ersten 9 Ausgänge sind verbunden
+#[derive(Debug, Eq, PartialEq)]
 pub enum ShiftRegisterType {
     LED,
     RELAIS,
@@ -16,6 +17,7 @@ pub enum ShiftRegisterType {
 /// Das `data` Feld ist ein Buffer der den aktuellen Zustand der Shift Register wiederspiegelt.
 /// Shift Register können nur geschrieben werden, desshalb benötigt man ein Speicherbereich um
 /// zum Beispiel den aktuellen Zustand einzelner Bits abfragen zu können.
+#[derive(Debug, Eq, PartialEq)]
 pub struct ShiftRegister {
     register_type: ShiftRegisterType,
     pub data: u64,
@@ -159,7 +161,13 @@ mod tests {
     use super::*;
 
     #[test]
-    fn shiftregister_creation() {
+    fn shift_register_defaults() {
+        let led = ShiftRegister::new(ShiftRegisterType::LED);
+        assert_eq!(led.register_type, ShiftRegisterType::LED);
+    }
+
+    #[test]
+    fn shift_register_creation() {
         let led = ShiftRegister::new(ShiftRegisterType::LED);
         assert_eq!(led.data, 0);
     }

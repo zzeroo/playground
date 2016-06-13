@@ -25,14 +25,30 @@ impl<'a> Server<'a> {
 #[cfg(test)]
 mod server_test {
     use super::*;
-    use zone::{Zone, ZoneType};
+    use zone::{ZoneType};
 
     #[test]
-    fn test_default_zones() {
+    fn zone_defaults() {
         let server = Server::new();
         assert_eq!(server.zones[0].zone_type, ZoneType::STOERUNG);
         assert_eq!(server.zones[1].zone_type, ZoneType::SCHWELLENWERT);
         // TODO: teste das
         // assert_eq!(server.zones[6].zone_type, true);
+        assert_eq!(server.zones[0].alarmpunkte.len(), 1);
+        assert_eq!(server.zones[1].alarmpunkte.len(), 4);
+    }
+
+    #[test]
+    fn zonen_und_module() {
+        let server = Server::new();
+        assert_eq!(server.module.len(), 1);
+    }
+
+    #[test]
+    fn server_kann_alarmpunkte_setzen() {
+        let mut server = Server::new();
+        assert_eq!(server.zones[0].alarmpunkte[0], false);
+        server.zones[0].alarmpunkte[0] = true;
+        assert_eq!(server.zones[0].alarmpunkte[0], true);
     }
 }
