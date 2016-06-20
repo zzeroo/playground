@@ -1,21 +1,20 @@
 use std::sync::{Arc, RwLock};
 
 /// Zonentypen
-///
-/// Die Anzahl der Alarmpunkte unterscheidet sich je nach Zonentype
-///
-/// * Stoerung          - Die Zone Störung hat nur ein Alarmpunkt
-/// * Schwellenwert     - Schwellenwert Zonen haben 4 Alarmpunkte
 #[derive(Debug, Eq, PartialEq)]
 pub enum ZoneType {
+    /// `Stoerung`          - Die Zone Störung hat nur ein Alarmpunkt
     Stoerung,
+    /// `Schwellenwert`     - Schwellenwert Zonen haben 4 Alarmpunkte
     Schwellenwert,
 }
 
 #[derive(Debug, Eq, PartialEq)]
 pub enum Direction {
-    No,     // Normal open
-    Nc,     // Normal closed
+    /// Normal open
+    No,
+    /// Normal closed
+    Nc,
 }
 
 /// Datenstruktur die die Zonen representiert
