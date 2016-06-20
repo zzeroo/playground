@@ -4,12 +4,12 @@ use std::sync::{Arc, RwLock};
 ///
 /// Die Anzahl der Alarmpunkte unterscheidet sich je nach Zonentype
 ///
-/// * STOERUNG          - Die Zone Störung hat nur ein Alarmpunkt
-/// * SCHWELLENWERT     - SCHWELLENWERT Zonen haben 4 Alarmpunkte
+/// * Stoerung          - Die Zone Störung hat nur ein Alarmpunkt
+/// * Schwellenwert     - Schwellenwert Zonen haben 4 Alarmpunkte
 #[derive(Debug, Eq, PartialEq)]
 pub enum ZoneType {
-    STOERUNG,
-    SCHWELLENWERT,
+    Stoerung,
+    Schwellenwert,
 }
 
 #[derive(Debug, Eq, PartialEq)]
@@ -36,21 +36,21 @@ impl Zone {
     /// ```
     /// use playground::zone::{Zone, ZoneType};
     ///
-    /// let stoerung = Zone::new(ZoneType::STOERUNG);
-    /// let zone1 = Zone::new(ZoneType::SCHWELLENWERT);
+    /// let stoerung = Zone::new(ZoneType::Stoerung);
+    /// let zone1 = Zone::new(ZoneType::Schwellenwert);
     ///
     /// assert_eq!(stoerung.alarmpunkt(0), Some(false));
     /// assert_eq!(zone1.alarmpunkt(0), Some(false));
     /// ```
     pub fn new(zone_type: ZoneType) -> Self {
         match zone_type {
-            ZoneType::STOERUNG => Zone {
-                zone_type: ZoneType::STOERUNG,
+            ZoneType::Stoerung => Zone {
+                zone_type: ZoneType::Stoerung,
                 alarmpunkte: Arc::new(RwLock::new(vec![false])),
                 direction: Direction::NC,
             },
-            ZoneType::SCHWELLENWERT => Zone {
-                zone_type: ZoneType::SCHWELLENWERT,
+            ZoneType::Schwellenwert => Zone {
+                zone_type: ZoneType::Schwellenwert,
                 alarmpunkte: Arc::new(RwLock::new(vec![false; 4])),
                 direction: Direction::NO,
             }
@@ -67,7 +67,7 @@ impl Zone {
     /// ```
     /// use playground::zone::{Zone, ZoneType};
     ///
-    /// let stoerung = Zone::new(ZoneType::STOERUNG);
+    /// let stoerung = Zone::new(ZoneType::Stoerung);
     ///
     /// assert_eq!(stoerung.alarmpunkt(0), Some(false));
     /// assert_eq!(stoerung.alarmpunkt(99), None);
@@ -90,7 +90,7 @@ impl Zone {
     /// ```
     /// use playground::zone::{Zone, ZoneType};
     ///
-    /// let stoerung = Zone::new(ZoneType::STOERUNG);
+    /// let stoerung = Zone::new(ZoneType::Stoerung);
     ///
     /// stoerung.alarmpunkt_set(0, true);
     /// assert_eq!(stoerung.alarmpunkt(0), Some(true));
@@ -109,7 +109,7 @@ mod tests {
 
     #[test]
     fn zone_stoerung() {
-        let zone = Zone::new(ZoneType::STOERUNG);
+        let zone = Zone::new(ZoneType::Stoerung);
         assert_eq!(zone.alarmpunkt(0), Some(false));
         assert_eq!(zone.alarmpunkt(1), None);
         assert_eq!(zone.alarmpunkt(2), None);
@@ -118,7 +118,7 @@ mod tests {
 
     #[test]
     fn zone_schwellenwert() {
-        let zone = Zone::new(ZoneType::SCHWELLENWERT);
+        let zone = Zone::new(ZoneType::Schwellenwert);
         assert_eq!(zone.alarmpunkt(0), Some(false));
         assert_eq!(zone.alarmpunkt(1), Some(false));
         assert_eq!(zone.alarmpunkt(2), Some(false));
@@ -127,13 +127,13 @@ mod tests {
 
     #[test]
     fn zone_stoerung_ist_normal_closed() {
-        let zone = Zone::new(ZoneType::STOERUNG);
+        let zone = Zone::new(ZoneType::Stoerung);
         assert_eq!(zone.direction, Direction::NC);
     }
 
     #[test]
     fn zone_schwellenwert_ist_normal_open() {
-        let zone = Zone::new(ZoneType::SCHWELLENWERT);
+        let zone = Zone::new(ZoneType::Schwellenwert);
         assert_eq!(zone.direction, Direction::NO);
     }
 }

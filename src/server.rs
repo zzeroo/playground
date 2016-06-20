@@ -11,8 +11,8 @@ impl<'a> Server<'a> {
     pub fn new() -> Self {
         Server {
             zones: vec![
-                Zone::new(ZoneType::STOERUNG),
-                Zone::new(ZoneType::SCHWELLENWERT),
+                Zone::new(ZoneType::Stoerung),
+                Zone::new(ZoneType::Schwellenwert),
             ],
             module: vec![],
         }
@@ -35,8 +35,8 @@ mod tests {
     #[test]
     fn zone_defaults() {
         let server = Server::new();
-        assert_eq!(server.zones[0].zone_type, ZoneType::STOERUNG);
-        assert_eq!(server.zones[1].zone_type, ZoneType::SCHWELLENWERT);
+        assert_eq!(server.zones[0].zone_type, ZoneType::Stoerung);
+        assert_eq!(server.zones[1].zone_type, ZoneType::Schwellenwert);
         assert_eq!(server.zones[0].alarmpunkt(0), Some(false));
         assert_eq!(server.zones[0].alarmpunkt(1), None);
         assert_eq!(server.zones[0].alarmpunkt(2), None);
