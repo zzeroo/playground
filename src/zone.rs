@@ -14,8 +14,8 @@ pub enum ZoneType {
 
 #[derive(Debug, Eq, PartialEq)]
 pub enum Direction {
-    NO,     // Normal open
-    NC,     // Normal closed
+    No,     // Normal open
+    Nc,     // Normal closed
 }
 
 /// Datenstruktur die die Zonen representiert
@@ -47,12 +47,12 @@ impl Zone {
             ZoneType::Stoerung => Zone {
                 zone_type: ZoneType::Stoerung,
                 alarmpunkte: Arc::new(RwLock::new(vec![false])),
-                direction: Direction::NC,
+                direction: Direction::Nc,
             },
             ZoneType::Schwellenwert => Zone {
                 zone_type: ZoneType::Schwellenwert,
                 alarmpunkte: Arc::new(RwLock::new(vec![false; 4])),
-                direction: Direction::NO,
+                direction: Direction::No,
             }
         }
     }
@@ -128,12 +128,12 @@ mod tests {
     #[test]
     fn zone_stoerung_ist_normal_closed() {
         let zone = Zone::new(ZoneType::Stoerung);
-        assert_eq!(zone.direction, Direction::NC);
+        assert_eq!(zone.direction, Direction::Nc);
     }
 
     #[test]
     fn zone_schwellenwert_ist_normal_open() {
         let zone = Zone::new(ZoneType::Schwellenwert);
-        assert_eq!(zone.direction, Direction::NO);
+        assert_eq!(zone.direction, Direction::No);
     }
 }
