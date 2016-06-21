@@ -4,8 +4,8 @@ use zone::{Zone};
 /// Sensortyp, Art der Messzelle
 #[derive(Debug, Eq, PartialEq)]
 pub enum SensorType {
+    NemotoNO2,
     NemotoCO,
-    NemotoNO,
 }
 
 /// Representiert eine Sensor Messzelle
@@ -25,8 +25,8 @@ impl<'a> Sensor<'a> {
                 adc_value: 0,
                 zones: vec!(),
             },
-            SensorType::NemotoNO => Sensor {
-                sensor_type: SensorType::NemotoNO,
+            SensorType::NemotoNO2 => Sensor {
+                sensor_type: SensorType::NemotoNO2,
                 adc_value: 0,
                 zones: vec!(),
             },

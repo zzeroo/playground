@@ -9,6 +9,7 @@ pub enum ZoneType {
     Schwellenwert,
 }
 
+/// Schaltrichtung wenn ein Alarmpunkt erreicht wurde
 #[derive(Debug, Eq, PartialEq)]
 pub enum Direction {
     /// Normal open
