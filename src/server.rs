@@ -50,7 +50,7 @@ mod tests {
     #[test]
     fn zonen_und_module() {
         let mut server = Server::new();
-        let module1 = Module::new(ModuleType::RAGAS_CO_NO);
+        let module1 = Module::new(ModuleType::RAGAS_CO_NO2);
         assert_eq!(server.module.len(), 0);
         server.module.push(module1);
         assert_eq!(server.module.len(), 1);
