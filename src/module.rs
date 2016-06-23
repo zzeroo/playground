@@ -6,8 +6,8 @@ use sensor::{Sensor, SensorType};
 #[derive(Debug, Eq, PartialEq)]
 #[allow(non_camel_case_types)]
 pub enum ModuleType {
-    /// * RAGAS_CO_NO       - RA-GAS GmbH Kombisensor mit CO und NO Messzelle
-    RAGAS_CO_NO,
+    /// * RAGAS_CO_NO2       - RA-GAS GmbH Kombisensor mit CO und NO Messzelle
+    RAGAS_CO_NO2,
 }
 
 
@@ -30,14 +30,14 @@ impl<'a> Module<'a> {
     /// ```
     /// use playground::module::{Module, ModuleType};
     ///
-    /// let module1 = Module::new(ModuleType::RAGAS_CO_NO);
+    /// let module1 = Module::new(ModuleType::RAGAS_CO_NO2);
     /// assert_eq!(module1.sensors.len(), 2);
     /// ```
     pub fn new(module_type: ModuleType) -> Self {
         match module_type {
-            ModuleType::RAGAS_CO_NO => {
+            ModuleType::RAGAS_CO_NO2 => {
                 Module {
-                    module_type: ModuleType::RAGAS_CO_NO,
+                    module_type: ModuleType::RAGAS_CO_NO2,
                     sensors: vec![
                     Sensor::new(SensorType::NemotoNO2),
                         Sensor::new(SensorType::NemotoCO),
@@ -54,8 +54,8 @@ mod tests {
 
     #[test]
     fn defaults() {
-        let module = Module::new(ModuleType::RAGAS_CO_NO);
-        assert_eq!(module.module_type, ModuleType::RAGAS_CO_NO);
+        let module = Module::new(ModuleType::RAGAS_CO_NO2);
+        assert_eq!(module.module_type, ModuleType::RAGAS_CO_NO2);
     }
 
 }
