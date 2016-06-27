@@ -87,16 +87,15 @@ mod tests {
         let mut server = Server::new();
         let module1 = Module::new();
         server.modules.push(module1);
-        // assert_eq!(server.modules.len(), 1);
-        // assert_eq!(server.modules.get(0).unwrap().sensors.len(), 2);
+        assert_eq!(server.modules.len(), 1);
+        assert_eq!(server.modules.get(0).unwrap().sensors.len(), 0);
     }
 
     #[test]
     fn server_background_thread_update_sensors() {
         let mut server = Server::new();
         let mut module1 = Module::new();
-        // server.modules.push(&mut module1);
-        //
-        // server.update_sensors();
+        server.modules.push(module1);
+        server.update_sensors();
     }
 }
