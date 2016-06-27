@@ -39,8 +39,7 @@ impl Sensor {
 impl Module {
     pub fn new() -> Self {
         Module {
-            sensors: vec![
-            ],
+            sensors: vec![],
         }
     }
 }

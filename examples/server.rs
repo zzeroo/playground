@@ -11,7 +11,8 @@ fn main() {
 
     loop {
         thread::spawn(move || {
-            // server.update_sensors();
+            // println!("Update Sensors");
+            server.update_sensors();
         });
 
         thread::sleep(Duration::from_millis(1000));
