@@ -8,7 +8,7 @@ pub struct Sensor {
 }
 
 pub struct Module {
-    sensors: Vec<Sensor>,
+    pub sensors: Vec<Sensor>,
 }
 
 pub struct Server {
@@ -17,7 +17,7 @@ pub struct Server {
 
 
 impl Sensor {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Sensor {
             adc_value: 0,
         }

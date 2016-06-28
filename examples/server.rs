@@ -5,11 +5,17 @@ use std::thread;
 use std::time::Duration;
 
 fn main() {
-    let mut server = Server::new();
-    let module1 = Module::new();
-    server.modules.push(module1);
 
     loop {
+        let mut server = Server::new();
+        let mut module = Module::new();
+        let sensor1 = Sensor::new();
+        let sensor2 = Sensor::new();
+        module.sensors.push(sensor1);
+        module.sensors.push(sensor2);
+        server.modules.push(module);
+
+
         thread::spawn(move || {
             // println!("Update Sensors");
             server.update_sensors();
